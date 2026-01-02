@@ -35,8 +35,8 @@ export default function SignIn() {
   const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "364950776@qq.com",
+      password: "123456789",
     },
   });
 
@@ -45,7 +45,7 @@ export default function SignIn() {
       {
         email: data.email,
         password: data.password,
-        callbackURL: "/dashboard",
+        callbackURL: "/",
       },
       {
         onRequest: () => {
@@ -154,7 +154,7 @@ export default function SignIn() {
                   await signIn.social(
                     {
                       provider: "github",
-                      callbackURL: "/dashboard",
+                      callbackURL: "/",
                     },
                     {
                       onRequest: () => {

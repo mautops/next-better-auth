@@ -46,7 +46,7 @@ export default function SignUp() {
 					email: data.email,
 					password: data.password,
 					name: data.name,
-					callbackURL: "/dashboard",
+					callbackURL: "/",
 				},
 				{
 					onRequest: () => {
@@ -62,7 +62,7 @@ export default function SignUp() {
 					onSuccess: async () => {
 						setIsLoading(false);
 						toast.success("Account created successfully!");
-						router.push("/dashboard");
+						router.push("/");
 					},
 				}
 			);
