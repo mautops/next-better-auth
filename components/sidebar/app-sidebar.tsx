@@ -30,6 +30,8 @@ import {
   GripVertical,
   LogIn,
   LogOut,
+  User,
+  Contact,
 } from "lucide-react";
 import { useSession, signOut } from "@/lib/auth-client";
 import { DarkLightToggle } from "@/components/theme/dark-light";
@@ -43,6 +45,7 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
+  MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 
@@ -85,15 +88,8 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-4">
-          {/* Logo: 四个紫色方块 */}
-          <div className="grid grid-cols-2 gap-0.5">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                className="size-3 rounded-sm bg-purple-500"
-              />
-            ))}
-          </div>
+          {/* Logo */}
+          <Contact className="size-8 text-primary" />
           <div className="flex flex-col">
             <span className="text-sm font-semibold text-foreground">
               {siteConfig.name}
@@ -208,9 +204,14 @@ export function AppSidebar() {
                         </SidebarMenuButton>
                       </MenubarTrigger>
                       <MenubarContent align="start" side="right" className="w-56">
+                        <MenubarItem onClick={() => router.push("/profile")}>
+                          <User className="mr-2 size-4" />
+                          <span>个人资料</span>
+                        </MenubarItem>
+                        <MenubarSeparator />
                         <MenubarItem onClick={handleSignOut}>
                           <LogOut className="mr-2 size-4" />
-                          <span>登出</span>
+                          <span>退出登录</span>
                         </MenubarItem>
                       </MenubarContent>
                     </MenubarMenu>

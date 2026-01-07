@@ -19,12 +19,17 @@ model User {
   email         String
   emailVerified Boolean   @default(false)
   image         String?
+  cn_name       String?
+  alas          String?
+  phone         String?
+  extra         Json      @default("{}")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
 
   @@unique([email])
+  @@unique([phone])
   @@map("user")
 }
 
