@@ -33,7 +33,7 @@ import {
 } from "lucide-react";
 import { useSession, signOut } from "@/lib/auth-client";
 import { DarkLightToggle } from "@/components/theme/dark-light";
-import { TweakcnThemeSelector } from "@/components/theme/tweakcn-selector";
+import { ThemeSelector } from "@/components/theme/theme-selector";
 import { siteConfig } from "@/config/site";
 import { menuItems } from "@/config/menu";
 import Link from "next/link";
@@ -240,7 +240,7 @@ export function AppSidebar() {
                 <div className="flex items-center gap-2 w-full">
                   <DarkLightToggle />
                   <Separator orientation="vertical" className="h-4" />
-                  <TweakcnThemeSelector />
+                  <ThemeSelector />
                 </div>
               </SidebarMenuItem>
             </SidebarMenu>

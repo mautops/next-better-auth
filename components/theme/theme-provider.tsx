@@ -13,7 +13,6 @@ export function ThemeProvider({
       attribute="class"
       defaultTheme={siteConfig.theme.defaultTheme}
       enableSystem={siteConfig.theme.enableSystem}
-      disableTransitionOnChange
       {...props}
     >
       {children}
