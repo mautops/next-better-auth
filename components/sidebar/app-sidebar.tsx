@@ -40,6 +40,7 @@ import { siteConfig } from "@/config/site";
 import { menuItems } from "@/config/menu";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Menubar,
   MenubarContent,
@@ -48,10 +49,12 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { motion } from "motion/react";
 
 export function AppSidebar() {
   const { data: session } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
   const user = session?.user;
   const isLoggedIn = !!user;
 
@@ -87,7 +90,11 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-2 py-4">
+        <motion.div
+          className="flex items-center gap-2 px-2 py-4"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+        >
           {/* Logo */}
           <Contact className="size-8 text-primary" />
           <div className="flex flex-col">
@@ -98,7 +105,7 @@ export function AppSidebar() {
               {siteConfig.description}
             </span>
           </div>
-        </div>
+        </motion.div>
       </SidebarHeader>
 
       <SidebarContent>
@@ -106,44 +113,69 @@ export function AppSidebar() {
           <SidebarGroupLabel>导航</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menuItems.map((item) => {
+              {menuItems.map((item, index) => {
                 const Icon = item.icon;
                 if (item.subItems) {
                   return (
                     <Collapsible key={item.title} defaultOpen={item.defaultOpen}>
                       <SidebarMenuItem>
                         <CollapsibleTrigger asChild>
-                          <SidebarMenuButton>
-                            <Icon className="size-4" />
-                            <span>{item.title}</span>
-                            <ChevronDown className="ml-auto size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                          </SidebarMenuButton>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                          <SidebarMenuSub>
-                            {item.subItems.map((subItem) => (
-                              <SidebarMenuSubItem key={subItem.title}>
-                                <SidebarMenuSubButton asChild>
-                                  <Link href={subItem.href}>
-                                    {subItem.title}
-                                  </Link>
-                                </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
-                            ))}
-                          </SidebarMenuSub>
-                        </CollapsibleContent>
+                            <motion.div
+                              whileHover={{ x: 2 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <SidebarMenuButton>
+                                <Icon className="size-4" />
+                                <span>{item.title}</span>
+                                <ChevronDown className="ml-auto size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                              </SidebarMenuButton>
+                            </motion.div>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <SidebarMenuSub>
+                                {item.subItems.map((subItem, subIndex) => (
+                                  <SidebarMenuSubItem key={subItem.title}>
+                                    <motion.div
+                                      whileHover={{ x: 2 }}
+                                      transition={{ duration: 0.2 }}
+                                    >
+                                      <SidebarMenuSubButton asChild>
+                                        <Link href={subItem.href}>
+                                          {subItem.title}
+                                        </Link>
+                                      </SidebarMenuSubButton>
+                                    </motion.div>
+                                  </SidebarMenuSubItem>
+                                ))}
+                              </SidebarMenuSub>
+                            </motion.div>
+                          </CollapsibleContent>
                       </SidebarMenuItem>
                     </Collapsible>
                   );
                 }
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={item.href || "#"}>
-                        <Icon className="size-4" />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
+                    <motion.div
+                      whileHover={{ x: 2 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <SidebarMenuButton asChild>
+                        <Link 
+                          href={item.href || "#"}
+                          className={pathname === item.href ? "bg-accent" : ""}
+                        >
+                          <Icon className="size-4" />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </motion.div>
                   </SidebarMenuItem>
                 );
               })}
@@ -158,18 +190,28 @@ export function AppSidebar() {
             <SidebarMenu>
               {/* 官方文档 */}
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <a
-                    href="https://docs.example.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
-                  >
-                    <BookOpen className="size-4" />
-                    <span>官方文档</span>
-                    <ExternalLink className="ml-auto size-4" />
-                  </a>
-                </SidebarMenuButton>
+                <motion.div
+                  whileHover={{ x: 2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <SidebarMenuButton asChild>
+                    <a
+                      href="https://docs.example.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      <BookOpen className="size-4" />
+                      <span>官方文档</span>
+                      <motion.div
+                        whileHover={{ x: 2, opacity: 0.7 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <ExternalLink className="ml-auto size-4" />
+                      </motion.div>
+                    </a>
+                  </SidebarMenuButton>
+                </motion.div>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
@@ -186,22 +228,32 @@ export function AppSidebar() {
                   <Menubar className="border-0 bg-transparent p-0 h-auto">
                     <MenubarMenu>
                       <MenubarTrigger asChild>
-                        <SidebarMenuButton className="w-full h-auto py-2">
-                          <Avatar className="size-8">
-                            <AvatarFallback className="bg-muted">
-                              {getUserInitial()}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex flex-col flex-1 min-w-0 items-start">
-                            <span className="text-sm font-medium truncate">
-                              {getUserDisplayName()}
-                            </span>
-                            <span className="text-xs text-muted-foreground truncate">
-                              {getUserEmail()}
-                            </span>
-                          </div>
-                          <GripVertical className="size-4 text-muted-foreground shrink-0 ml-auto" />
-                        </SidebarMenuButton>
+                        <motion.div
+                          whileHover={{ x: 2 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <SidebarMenuButton className="w-full h-auto py-2">
+                            <motion.div
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <Avatar className="size-8">
+                                <AvatarFallback className="bg-muted">
+                                  {getUserInitial()}
+                                </AvatarFallback>
+                              </Avatar>
+                            </motion.div>
+                            <div className="flex flex-col flex-1 min-w-0 items-start">
+                              <span className="text-sm font-medium truncate">
+                                {getUserDisplayName()}
+                              </span>
+                              <span className="text-xs text-muted-foreground truncate">
+                                {getUserEmail()}
+                              </span>
+                            </div>
+                            <GripVertical className="size-4 text-muted-foreground shrink-0 ml-auto" />
+                          </SidebarMenuButton>
+                        </motion.div>
                       </MenubarTrigger>
                       <MenubarContent align="start" side="right" className="w-56">
                         <MenubarItem onClick={() => router.push("/profile")}>
@@ -219,12 +271,17 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               ) : (
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild className="h-auto py-2">
-                    <Link href="/auth/sign-in">
-                      <LogIn className="size-4" />
-                      <span>登录</span>
-                    </Link>
-                  </SidebarMenuButton>
+                  <motion.div
+                    whileHover={{ x: 2 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <SidebarMenuButton asChild className="h-auto py-2">
+                      <Link href="/auth/sign-in">
+                        <LogIn className="size-4" />
+                        <span>登录</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </motion.div>
                 </SidebarMenuItem>
               )}
             </SidebarMenu>
@@ -239,9 +296,21 @@ export function AppSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <div className="flex items-center gap-2 w-full">
-                  <DarkLightToggle />
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <DarkLightToggle />
+                  </motion.div>
                   <Separator orientation="vertical" className="h-4" />
-                  <ThemeSelector />
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <ThemeSelector />
+                  </motion.div>
                 </div>
               </SidebarMenuItem>
             </SidebarMenu>

@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Home, Box, MessageCircleCode } from "lucide-react";
+import { Home, Key, FolderKanban, Users } from "lucide-react";
 
 export interface MenuSubItem {
   title: string;
@@ -21,15 +21,18 @@ export const menuItems: MenuItem[] = [
     icon: Home,
   },
   {
-    title: "服务目录",
-    icon: Box,
-    defaultOpen: true,
-    subItems: [{ title: "1. 虚拟机管理", href: "/resources/virtualization" }],
+    title: "秘钥管理",
+    href: "/tokens",
+    icon: Key,
   },
   {
-    title: "企业微信",
-    icon: MessageCircleCode,
-    defaultOpen: true,
-    subItems: [{ title: "1. 企微建群", href: "/wxwork/group" }],
+    title: "项目管理",
+    href: "/projects",
+    icon: FolderKanban,
+  },
+  {
+    title: "用户管理",
+    href: "/users",
+    icon: Users,
   },
 ];

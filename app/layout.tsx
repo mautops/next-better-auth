@@ -3,6 +3,7 @@ import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/components/theme/theme-provider"
 import { SidebarProvider } from "@/components/ui/sidebar"
+import { QueryProvider } from "@/providers/query-provider"
 
 export const metadata: Metadata = {
   title: "UserCenter",
@@ -37,11 +38,13 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <ThemeProvider>
-          <SidebarProvider>
-            {children}
-          </SidebarProvider>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider>
+            <SidebarProvider>
+              {children}
+            </SidebarProvider>
+          </ThemeProvider>
+        </QueryProvider>
         <Toaster />
       </body>
     </html>
